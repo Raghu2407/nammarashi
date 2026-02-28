@@ -5,7 +5,8 @@ import { APP_STRINGS } from "../constants/strings";
 import { fetchAttractions } from "../features/attractions/attractionsSlice";
 
 import hubli from "../assets/hubli.mp4";
-import Search from "../components/search";
+import FAQ from "../components/FAQ";
+import OurPromise from "../components/OurPromise";
 import ServiceCard from "../components/servicesCars";
 import TripSelector from "../components/TripSelector";
 import { LocationContext } from "../context/LocationContext";
@@ -52,7 +53,7 @@ const Home = () => {
       seats: 4,
       fuel: 'Petrol',
       price: 12,
-      image: 'https://kushitravels.com/img/Cars/glanza.png', // Correct: Capital 'C', no 'assets/'
+      image: `${import.meta.env.BASE_URL}cars/glanza.png`, // Correct: Capital 'C', no 'assets/'
       rating: 4.8
     },
     // 2. Sedan - Swift Dzire (New)
@@ -63,7 +64,7 @@ const Home = () => {
       seats: 4,
       fuel: 'Diesel',
       price: 12,
-      image: 'https://kushitravels.com/img/Cars/dzire_new.png',
+      image: `${import.meta.env.BASE_URL}cars/dzire_new.png`,
       rating: 4.9
     },
     // 3. Sedan - Toyota Etios
@@ -74,7 +75,7 @@ const Home = () => {
       seats: 4,
       fuel: 'Diesel',
       price: 12,
-      image: 'https://kushitravels.com/img/Cars/etios.png',
+      image: `${import.meta.env.BASE_URL}cars/etios.png`,
       rating: 4.7
     },
     // 4. SUV - Maruti Ertiga
@@ -85,7 +86,7 @@ const Home = () => {
       seats: 6,
       fuel: 'CNG/Petrol',
       price: 16,
-      image: 'https://kushitravels.com/img/Cars/ertiga.png',
+      image: `${import.meta.env.BASE_URL}cars/ertiga.png`,
       rating: 4.8
     },
     // 5. SUV - Kia Carens
@@ -96,7 +97,7 @@ const Home = () => {
       seats: 6,
       fuel: 'Diesel',
       price: 16,
-      image: 'https://kushitravels.com/img/Cars/carens.png',
+      image: `${import.meta.env.BASE_URL}cars/carens.png`,
       rating: 4.8
     },
     // 6. SUV - Toyota Innova
@@ -107,7 +108,7 @@ const Home = () => {
       seats: 7,
       fuel: 'Diesel',
       price: 16,
-      image: 'https://kushitravels.com/img/Cars/innova.png',
+      image: `${import.meta.env.BASE_URL}cars/innova.png`,
       rating: 4.7
     },
     // 7. SUV - Innova Crysta
@@ -118,7 +119,7 @@ const Home = () => {
       seats: 7,
       fuel: 'Diesel',
       price: 18,
-      image: 'https://kushitravels.com/img/Cars/innoca crysta.png',
+      image: `${import.meta.env.BASE_URL}cars/innova_crysta.png`,
       rating: 5.0,
       featured: true
     },
@@ -130,7 +131,7 @@ const Home = () => {
       seats: 7,
       fuel: 'Hybrid',
       price: 22,
-      image: 'https://kushitravels.com/img/Cars/hycross.png',
+      image: `${import.meta.env.BASE_URL}cars/hycross.png`,
       rating: 5.0
     },
     // 9. Tempo - Tempo Traveller (10S)
@@ -141,7 +142,7 @@ const Home = () => {
       seats: 10,
       fuel: 'Diesel',
       price: 24,
-      image: 'https://kushitravels.com/img/Cars/tempo10.png',
+      image: `${import.meta.env.BASE_URL}cars/tempo10.png`,
       rating: 4.7
     },
     // 10. Tempo - Tempo Traveller (13S)
@@ -152,7 +153,7 @@ const Home = () => {
       seats: 13,
       fuel: 'Diesel',
       price: 22,
-      image: 'https://kushitravels.com/img/Cars/tempo13.png',
+      image: `${import.meta.env.BASE_URL}cars/tempo13.png`,
       rating: 4.9
     },
     // 11. Tempo - Tempo Traveller (18S)
@@ -163,7 +164,7 @@ const Home = () => {
       seats: 18,
       fuel: 'Diesel',
       price: 32,
-      image: 'https://kushitravels.com/img/Cars/tempo18.png',
+      image: `${import.meta.env.BASE_URL}cars/tempo18.png`,
       rating: 4.8
     },
     // 12. Tempo - Force Urbania (12S)
@@ -174,7 +175,7 @@ const Home = () => {
       seats: 12,
       fuel: 'Diesel',
       price: 40,
-      image: 'https://kushitravels.com/img/Cars/urbania.png',
+      image: `${import.meta.env.BASE_URL}cars/urbania.png`,
       rating: 5.0
     },
     // 13. Tempo - Force Urbania (17S)
@@ -185,7 +186,7 @@ const Home = () => {
       seats: 17,
       fuel: 'Diesel',
       price: 40,
-      image: 'https://kushitravels.com/img/Cars/urbania.png',
+      image: `${import.meta.env.BASE_URL}cars/urbania.png`,
       rating: 5.0
     },
     // 14. Bus - Mini Bus (23S)
@@ -196,7 +197,7 @@ const Home = () => {
       seats: 23,
       fuel: 'Diesel',
       price: 40,
-      image: 'https://kushitravels.com/img/Cars/mini bus.png',
+      image: `${import.meta.env.BASE_URL}cars/mini_bus.png`,
       rating: 4.6
     },
     // 15. Bus - AC Coach Bus (34S)
@@ -207,7 +208,7 @@ const Home = () => {
       seats: 34,
       fuel: 'Diesel',
       price: 52,
-      image: 'https://kushitravels.com/img/Cars/bus_coach.png',
+      image: `${import.meta.env.BASE_URL}cars/bus_coach.png`,
       rating: 4.8
     },
     // 16. Volvo Bus
@@ -218,7 +219,7 @@ const Home = () => {
       seats: 45,
       fuel: 'Diesel',
       price: 75,
-      image: 'https://kushitravels.com/img/Cars/volvo.png',
+      image: `${import.meta.env.BASE_URL}cars/volvo.png`,
       rating: 4.6
     }
   ];
@@ -428,15 +429,15 @@ const Home = () => {
         {/* Content On Top */}
         <div className="absolute inset-0 z-10 m-10 flex flex-col items-center justify-center gap-6">
           <TripSelector />
-          <Search />
+          {/* <Search /> */}
         </div>
 
       </div>
 
-      <div className="p-20">
+      <div className="p-10 sm:p-20">
         {tripType === "Local" && (
           <>
-            <div className="mb-3">
+            <div className="mb-3" id="nearby">
               <div className="flex justify-between items-center">
                 <h2 className="text-lg font-semibold">
                   Local Attractions
@@ -498,6 +499,10 @@ const Home = () => {
             </div>
           </>
         )}
+
+        {/* Our Promise */}
+        <OurPromise />
+        <FAQ />
       </div>
     </>
   );
