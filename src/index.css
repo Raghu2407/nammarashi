@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* Themes setup */
+
+/* theme color will be blue */
+
+.theme-color {
+    color: var(--theme-color);
+}
+
+.theme-bg {
+    background: var(--theme-color);
+}
+
+.theme-button {
+    @apply  rounded-3xl hover:rounded-2xl;
+}
+
+
+:root {
+    --theme-color : oklch(62.3% 0.214 259.815);
+}
+
+
+@keyframes float {
+  0% { transform: translateY(-5px); }
+  50% { transform: translateY(5px); }
+  100% { transform: translateY(-5px); }
+}
