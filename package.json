@@ -9,7 +9,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "predeploy": "npm run build",
-"deploy": "gh-pages -d dist",
+"deploy": "gh-pages -d dist --dest aadhya --remove nammarashi",
     "preview": "vite preview"
   },
   "dependencies": {
