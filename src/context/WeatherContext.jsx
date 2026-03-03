@@ -1,8 +1,6 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
-import { LocationContext } from "./LocationContext";
-
-export const WeatherContext = createContext();
+import { useContext, useEffect, useState } from "react";
+import { LocationContext, WeatherContext } from "./contexts";
 
 export const WeatherContextProvider = ({ children }) => {
     const { location } = useContext(LocationContext);

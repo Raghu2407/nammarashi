@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { APP_STRINGS } from "../constants/strings";
 import { fetchAttractions } from "../features/attractions/attractionsSlice";
 
 import hubli from "../assets/hubli.mp4";
@@ -9,7 +8,7 @@ import FAQ from "../components/FAQ";
 import OurPromise from "../components/OurPromise";
 import ServiceCard from "../components/servicesCars";
 import TripSelector from "../components/TripSelector";
-import { LocationContext } from "../context/LocationContext";
+import { LocationContext } from "../context/contexts";
 import { toCardProps } from "../utils/toCardProps";
 
 const Home = () => {
@@ -22,14 +21,7 @@ const Home = () => {
     (state) => state.attractions
   );
 
-  const tripTypeFromRoute = locationRouter.state?.tripType || "Local";
-  const [tripType, setTripType] = useState(tripTypeFromRoute);
-
-  useEffect(() => {
-    if (locationRouter.state?.tripType) {
-      setTripType(locationRouter.state.tripType);
-    }
-  }, [locationRouter.state]);
+  const tripType = locationRouter.state?.tripType || "Local";
 
   // Fetch when tripType is Local
   useEffect(() => {
@@ -297,115 +289,6 @@ const Home = () => {
       image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80"
     }
   ];
-
-  const Rating = ({ rating = 0, max = 5, size = 18, className }) => {
-    const percentage = (rating / max) * 100;
-
-    return (
-      <div
-        className={`relative inline-flex ${className ?? ""}`}
-        style={{ width: size * max }}
-      >
-        {/* Empty stars */}
-        <div className="flex">
-          {Array.from({ length: max }).map((_, i) => (
-            <svg
-              key={`empty-${i}`}
-              width={size}
-              height={size}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#ccc"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>
-          ))}
-        </div>
-
-        {/* Filled overlay */}
-        <div
-          className="absolute top-0 left-0 flex overflow-hidden"
-          style={{ width: `${percentage}%` }}
-        >
-          {Array.from({ length: max }).map((_, i) => (
-            <svg
-              key={`full-${i}`}
-              width={size}
-              height={size}
-              viewBox="0 0 24 24"
-              fill="gold"
-              stroke="gold"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{ flexShrink: 0 }}
-            >
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-
-  const getSeatingCapacity = (type) => {
-    const capacityMap = {
-      Sedan: 4,
-      SUV: 6,
-      MUV: 7,
-      "Mini Bus": 12,
-      Bus: 40,
-      Hatchback: 4,
-      Tempo: 9,
-      Innova: 7,
-    };
-    // fallback: check if type string contains keywords
-    if (capacityMap[type]) return capacityMap[type];
-    if (/bus/i.test(type)) return 40;
-    if (/suv|muv|innova/i.test(type)) return 6;
-    return 4;
-  };
-
-  // const handleWhatsApp = (item) => {
-  //   const seats = getSeatingCapacity(item.type);
-  //   const phone = `${APP_STRINGS.OwnerContact.whatsapp}`; // replace with your number (no + or spaces)
-  //   const message = encodeURIComponent(
-  //     `Hello! I'd like to enquire about the following vehicle:\n\n` +
-  //     `🚗 *Vehicle:* ${item.name}\n` +
-  //     `🏷️ *Type:* ${item.type}\n` +
-  //     `💺 *Seating Capacity:* ${seats} Seats\n` +
-  //     `💰 *Price:* ₹${item.price}/km\n\n` +
-  //     `Please share availability and booking details. Thank you!`
-  //   );
-  //   window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-  // };
-
-  const handleWhatsApp = (item, service = null) => {
-    const seats = getSeatingCapacity(item.type);
-    const phone = `+91${APP_STRINGS.OwnerContact.whatsapp}`;
-    const message = encodeURIComponent(
-      `Hello! I'd like to enquire about a booking:\n\n` +
-      `🚗 *Vehicle:* ${item.name}\n` +
-      `🏷️ *Type:* ${item.type}\n` +
-      `💺 *Seating Capacity:* ${seats} Seats\n` +
-      `💰 *Price:* ₹${item.price}/km\n` +
-      (service
-        ? `\n🛎️ *Service:* ${service.title}\n` +
-        `📦 *Pricing Type:* ${service.priceType}\n` +
-        `📝 *Service Details:* ${service.description}\n`
-        : "") +
-      `\nPlease share availability and booking details. Thank you!`
-    );
-    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-  };
-
-  const handleCall = (item) => {
-    window.location.href = `tel:${APP_STRINGS.OwnerContact.phone}`; // replace with your number
-  };
 
 
   return (
