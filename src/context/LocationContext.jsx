@@ -1,7 +1,6 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
-
-export const LocationContext = createContext();
+import { useEffect, useState } from "react";
+import { LocationContext } from "./contexts";
 
 // Hubli fallback
 const FALLBACK_LOCATION = {
@@ -13,6 +12,22 @@ export const LocationProvider = ({ children }) => {
   const [location, setLocation] = useState(FALLBACK_LOCATION);
   const [address, setAddress] = useState(null);
   const [locationReady, setLocationReady] = useState(false);
+
+  const getAddressFromCoords = async (lat, lon) => {
+    try {
+      const response = await axios.get(
+        "https://nominatim.openstreetmap.org/reverse",
+        {
+          params: { format: "json", lat, lon },
+          headers: { "User-Agent": "nammarashi-travels" },
+        }
+      );
+
+      setAddress(response.data.display_name);
+    } catch (error) {
+      console.log("Address error:", error.message);
+    }
+  };
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -43,30 +58,16 @@ export const LocationProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     getLocation();
   }, []);
 
   useEffect(() => {
     if (location?.latitude && location?.longitude) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       getAddressFromCoords(location.latitude, location.longitude);
     }
   }, [location]);
-
-  const getAddressFromCoords = async (lat, lon) => {
-    try {
-      const response = await axios.get(
-        "https://nominatim.openstreetmap.org/reverse",
-        {
-          params: { format: "json", lat, lon },
-          headers: { "User-Agent": "nammarashi-travels" },
-        }
-      );
-
-      setAddress(response.data.display_name);
-    } catch (error) {
-      console.log("Address error:", error.message);
-    }
-  };
 
   return (
     <LocationContext.Provider

@@ -16,7 +16,7 @@ const fetchWikiSearchImage = async (placeName) => {
     const pages = res.data.query.pages;
     const page = Object.values(pages)[0];
     return page?.thumbnail?.source || null;
-  } catch (error) {
+  } catch {
     return null;
   }
 };
@@ -54,7 +54,7 @@ const fetchWikiGeoImage = async (lat, lng) => {
     const pages = imgRes.data.query.pages;
     const page = Object.values(pages)[0];
     return page?.thumbnail?.source || null;
-  } catch (error) {
+  } catch {
     return null;
   }
 };
@@ -62,11 +62,11 @@ const fetchWikiGeoImage = async (lat, lng) => {
 // ✅ Main export — tries both, falls back to null
 export const fetchWikiImage = async (placeName, lat, lng) => {
   // 1️⃣ Try by name first
-//   const nameImage = await fetchWikiSearchImage(placeName);
-//   if (nameImage) {
-//     console.log('🟢 Image found by name:', placeName);
-//     return nameImage;
-//   }
+  const nameImage = await fetchWikiSearchImage(placeName);
+  if (nameImage) {
+    console.log('🟢 Image found by name:', placeName);
+    return nameImage;
+  }
 
   // 2️⃣ Try by coordinates
   const geoImage = await fetchWikiGeoImage(lat, lng);
